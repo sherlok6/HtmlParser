@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public class RequestSourceURLImpl implements RequestURL {
 
     private static final Logger log = Logger.getLogger(RequestSourceURLImpl.class);
@@ -21,9 +22,12 @@ public class RequestSourceURLImpl implements RequestURL {
     public BufferedReader getBuffHtml(String path) {
         try{
             URL url = new URL(path);
+
             BufferedReader htmlBuff = new BufferedReader(
                     new InputStreamReader(url.openStream()));
+
             url = null;
+
             log.info("Получен ресурс по указанному адресу");
             return htmlBuff;
         } catch (IOException e) {
@@ -39,8 +43,14 @@ public class RequestSourceURLImpl implements RequestURL {
         try {
             Pattern patt = Pattern.compile(regex);
             Matcher matcher = patt.matcher(mbURL);
-            log.info("Соответствует шаблону URL");
-            return matcher.matches();
+
+            boolean match = matcher.matches();
+            if(match)
+                log.info("Соответствует шаблону URL");
+            else
+                log.error("Не соответствует URL шаблону");
+            return match;
+
         } catch (RuntimeException e) {
             log.error("Неверно указан URL!");
             log.error(e.getMessage());
