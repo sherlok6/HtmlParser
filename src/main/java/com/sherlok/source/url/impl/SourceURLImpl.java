@@ -1,35 +1,29 @@
 package com.sherlok.source.url.impl;
 
-import com.sherlok.source.url.inface.RequestURL;
+import com.sherlok.source.url.SourceURL;
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class RequestSourceURLImpl implements RequestURL {
+public class SourceURLImpl implements SourceURL {
 
-    private static final Logger log = Logger.getLogger(RequestSourceURLImpl.class);
-
-    RequestSourceURLImpl(){
-    }
+    private static final Logger log = Logger.getLogger(SourceURLImpl.class);
 
     @Override
-    public BufferedReader getBuffHtml(String path) {
+    public String getBuffHtml(String path){
         try{
             URL url = new URL(path);
-
-            BufferedReader htmlBuff = new BufferedReader(
-                    new InputStreamReader(url.openStream()));
-
+            Document htmlDoc = Jsoup.parse(url, 10000);
+            String htmlStr = htmlDoc.body().text();
             url = null;
-
             log.info("Получен ресурс по указанному адресу");
-            return htmlBuff;
+            return htmlStr;
         } catch (IOException e) {
             log.error("Ошибка при запросе ресурса");
             log.error(e.getMessage());
@@ -43,14 +37,13 @@ public class RequestSourceURLImpl implements RequestURL {
         try {
             Pattern patt = Pattern.compile(regex);
             Matcher matcher = patt.matcher(mbURL);
-
             boolean match = matcher.matches();
-            if(match)
+            if(match) {
                 log.info("Соответствует шаблону URL");
-            else
+            } else {
                 log.error("Не соответствует URL шаблону");
+            }
             return match;
-
         } catch (RuntimeException e) {
             log.error("Неверно указан URL!");
             log.error(e.getMessage());
