@@ -1,5 +1,5 @@
-package com.sherlok.source.parser.inface;
+package com.sherlok.source.parser;
 
 public interface ProcessingString {
-    void replaceSigns(String buf);
+    String replaceSigns(String buf);
 }
