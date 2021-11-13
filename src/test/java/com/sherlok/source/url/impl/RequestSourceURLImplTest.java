@@ -1,18 +1,19 @@
 package com.sherlok.source.url.impl;
 
 import junit.framework.TestCase;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class RequestSourceURLImplTest extends TestCase {
     Map<String, Boolean> urlMap = new TreeMap<>();
-    RequestSourceURLImpl requestSourceURL = new RequestSourceURLImpl();
+    SourceURLImpl requestSourceURL = new SourceURLImpl();
 
     public void initTest(){
         urlMap.put("http://proglang.su/java/url-processing", true);
@@ -21,16 +22,28 @@ public class RequestSourceURLImplTest extends TestCase {
         urlMap.put("просто url ХD", false);
     }
 
+    public void testURL(){
+        try {
+            URL url = new URL("http://proglang.su/java/url-processing");
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(url.openStream())
+            );
+
+            Document document = Jsoup.parse(url, 3000);
+            String testContent = new String(document.body().text());
+            System.out.println(testContent);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void testGetHtml() throws IOException {
         initTest();
         for(Map.Entry<String, Boolean> entry: urlMap.entrySet()){
             if (entry.getValue()){
                 URL url = new URL(entry.getKey());
-                BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(url.openStream()));
-                BufferedReader test = requestSourceURL.getBuffHtml(entry.getKey());
-                System.out.println(Arrays.toString(test.lines().toArray()));
-                System.out.println(Arrays.toString(reader.lines().toArray()));
             }
         }
     }
