@@ -1,22 +1,18 @@
 package com.sherlok.source.parser.impl;
 
-import com.sherlok.source.parser.inface.ProcessingString;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.sherlok.source.parser.ProcessingString;
+import org.apache.log4j.Logger;
 
 public class ProcessingStringImpl implements ProcessingString {
 
-    @Override
-    public void removeHtmlTags(StringBuffer buf) {
-
-    }
+    private static final Logger log = Logger.getLogger(ProcessingStringImpl.class);
 
     @Override
-    public void replaceSyntacticSigns(StringBuffer buf) {
-        String regex = "/\\p{Lu} \\P{Lu}*/gu";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(buf);
-        System.out.println(matcher.toMatchResult().toString());
+    public String replaceSigns(String str) {
+        String regex = "[\\[|\\]\\?|\\(|\\)|\\*|\\:|\\;|\"|.|\\=|,|!|{|}|+|-|/|#|\\d+]";
+        String text = str.replaceAll(regex, " ");
+        log.info("Исключаем разделители...");
+        return text.toUpperCase();
     }
+
 }

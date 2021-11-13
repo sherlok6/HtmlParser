@@ -1,15 +1,17 @@
 package com.sherlok.source.parser.impl;
 
-import com.sherlok.source.parser.inface.PreprocessingSource;
+import com.sherlok.source.parser.ProcessingSource;
 import org.apache.log4j.Logger;
 
-public class PreprocessingSourceImpl implements PreprocessingSource{
+public class ProcessingSourceImpl implements ProcessingSource {
 
     private static final Logger log = Logger.getLogger(ProcessingStringImpl.class);
 
     @Override
     public String[] split(String str) {
-        return str.split(" ");
+        String[] words = str.split("\\s{1,}");
+        log.info("Разбиваем на слова");
+        return words;
     }
 
 }
