@@ -50,8 +50,8 @@ public class SourceURLImpl implements SourceURL {
         }
     }
 
-    /**Используется {1} и {2} для работы с regular expression.
-     * {1} создаёт объект шаблона, по которому {2} будет искать совпадения в {@param mbURL}.
+    /**Используется {@link Pattern} и {@link Matcher} для работы с regular expression.
+     * {@link Pattern} создаёт объект шаблона, по которому {@link Matcher} будет искать совпадения в {@param mbURL}.
      * Делает запись в лог при ошибочных ситуациях, успешных и не очень({@param mbURL} не является URL-адресом).
      * @return false-не соотвествует URL запросу или возникли ошибки при составлении ReqularExpression,true-соответствует
      * **/
