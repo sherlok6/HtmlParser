@@ -4,8 +4,7 @@ import com.sherlok.source.parser.ProcessingSource;
 import com.sherlok.source.parser.ProcessingString;
 import org.apache.log4j.Logger;
 
-/** Класс реализует интерфейс {@link ProcessingString},содержит объект {@param log} и свойство <b>regex</b>.
- *  класса {@link Logger} для логирования
+/** Класс реализует интерфейс {@link ProcessingString},содержит объект <b>log</b> и свойство <b>regex</b>.
  *
  * @author sherlok6(Skiba Nikolai)
  * @version 1.0
